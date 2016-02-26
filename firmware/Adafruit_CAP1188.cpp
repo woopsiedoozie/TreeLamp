@@ -19,13 +19,13 @@
 // byte mySPCR, SPCRback;
 byte _i2caddr;
 char _resetpin;
-bool _i2c;
+bool _i2c = true;
 
-Adafruit_CAP1188::Adafruit_CAP1188(char resetpin) {
-  // I2C
-  _resetpin = resetpin;
-  _i2c = true;
-}
+// Adafruit_CAP1188::Adafruit_CAP1188(char resetpin) {
+  //I2C
+  // _resetpin = resetpin;
+  // _i2c = true;
+// }
 
 // Adafruit_CAP1188::Adafruit_CAP1188(char cspin, char resetpin) {
   //Hardware SPI
