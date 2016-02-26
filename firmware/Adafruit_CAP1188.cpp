@@ -20,8 +20,8 @@
 
 Adafruit_CAP1188::Adafruit_CAP1188(char resetpin) {
   // I2C
-  _resetpin = resetpin;
-  _i2c = true;
+  char _resetpin = resetpin;
+  bool _i2c = true;
 }
 
 // Adafruit_CAP1188::Adafruit_CAP1188(char cspin, char resetpin) {
@@ -48,7 +48,7 @@ boolean Adafruit_CAP1188::begin(byte i2caddr) {
   if (_i2c) {
     Wire.begin();
     
-    _i2caddr = i2caddr;
+    byte _i2caddr = i2caddr;
   } 
   // else if (_clk == -1) {
     //Hardware SPI
