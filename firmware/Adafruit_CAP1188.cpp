@@ -14,18 +14,18 @@
   BSD license, all text above must be included in any redistribution
  ****************************************************/
 
-#include "Adafruit_CAP1188.h"
+//#include "Adafruit_CAP1188.h"
 
 // byte mySPCR, SPCRback;
-byte _i2caddr;
-char _resetpin;
-bool _i2c = true;
+// byte _i2caddr;
+// char _resetpin;
+// bool _i2c = true;
 
-// Adafruit_CAP1188::Adafruit_CAP1188(char resetpin) {
+Adafruit_CAP1188::Adafruit_CAP1188(char resetpin) {
   //I2C
-  // _resetpin = resetpin;
-  // _i2c = true;
-// }
+   _resetpin = resetpin;
+   _i2c = true;
+}
 
 // Adafruit_CAP1188::Adafruit_CAP1188(char cspin, char resetpin) {
   //Hardware SPI
