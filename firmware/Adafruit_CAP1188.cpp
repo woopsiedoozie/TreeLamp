@@ -49,23 +49,24 @@ boolean Adafruit_CAP1188::begin(uint8_t i2caddr) {
     Wire.begin();
     
     _i2caddr = i2caddr;
-  } else if (_clk == -1) {
-    // Hardware SPI
-    digitalWrite(_cs, HIGH);
-    SPCRback = SPCR;
-    SPI.begin();
-    SPI.setClockDivider(SPI_CLOCK_DIV8);
-    SPI.setDataMode(SPI_MODE0);
-    mySPCR = SPCR;
-    SPCR = SPCRback;
-  } else {
-    // Sofware SPI
-    pinMode(_clk, OUTPUT);
-    pinMode(_mosi, OUTPUT);
-    pinMode(_cs, OUTPUT);
-    digitalWrite(_cs, HIGH);
-    digitalWrite(_clk, HIGH);
-  }
+  } 
+  // else if (_clk == -1) {
+    //Hardware SPI
+    // digitalWrite(_cs, HIGH);
+    // SPCRback = SPCR;
+    // SPI.begin();
+    // SPI.setClockDivider(SPI_CLOCK_DIV8);
+    // SPI.setDataMode(SPI_MODE0);
+    // mySPCR = SPCR;
+    // SPCR = SPCRback;
+  // } else {
+    //Sofware SPI
+    // pinMode(_clk, OUTPUT);
+    // pinMode(_mosi, OUTPUT);
+    // pinMode(_cs, OUTPUT);
+    // digitalWrite(_cs, HIGH);
+    // digitalWrite(_clk, HIGH);
+  // }
 
   if (_resetpin != -1) {
     pinMode(_resetpin, OUTPUT);
@@ -123,11 +124,11 @@ void Adafruit_CAP1188::LEDpolarity(uint8_t x) {
 */
 /**************************************************************************/
 static uint8_t i2cread(void) {
-  #if ARDUINO >= 100
+  // #if ARDUINO >= 100
   return Wire.read();
-  #else
-  return Wire.receive();
-  #endif
+  // #else
+  // return Wire.receive();
+  // #endif
 }
 
 /**************************************************************************/
@@ -136,11 +137,11 @@ static uint8_t i2cread(void) {
 */
 /**************************************************************************/
 static void i2cwrite(uint8_t x) {
-  #if ARDUINO >= 100
+  // #if ARDUINO >= 100
   Wire.write((uint8_t)x);
-  #else
-  Wire.send(x);
-  #endif
+  // #else
+  // Wire.send(x);
+  // #endif
 }
 
 /**************************************************************************/
@@ -174,25 +175,26 @@ uint8_t Adafruit_CAP1188::readRegister(uint8_t reg) {
     Wire.endTransmission();
     Wire.requestFrom(_i2caddr, 1);
     return (i2cread());
-  } else {
-    if (_clk == -1) {
-      SPCRback = SPCR;
-      SPCR = mySPCR;
-    }
-    digitalWrite(_cs, LOW);
-    // set address
-    spixfer(0x7D);
-    spixfer(reg);
-    digitalWrite(_cs, HIGH);
-    digitalWrite(_cs, LOW);
-    spixfer(0x7F);
-    uint8_t reply = spixfer(0); 
-    digitalWrite(_cs, HIGH);
-    if (_clk == -1) {
-      SPCR = SPCRback;
-    }
-    return reply;
-  }  
+  } 
+  // else {
+    // if (_clk == -1) {
+      // SPCRback = SPCR;
+      // SPCR = mySPCR;
+    // }
+    // digitalWrite(_cs, LOW);
+    //set address
+    // spixfer(0x7D);
+    // spixfer(reg);
+    // digitalWrite(_cs, HIGH);
+    // digitalWrite(_cs, LOW);
+    // spixfer(0x7F);
+    // uint8_t reply = spixfer(0); 
+    // digitalWrite(_cs, HIGH);
+    // if (_clk == -1) {
+      // SPCR = SPCRback;
+    // }
+    // return reply;
+  // }  
 }
 
 
@@ -207,22 +209,23 @@ void Adafruit_CAP1188::writeRegister(uint8_t reg, uint8_t value) {
     i2cwrite((uint8_t)reg);
     i2cwrite((uint8_t)(value));
     Wire.endTransmission();
-  } else {
-    if (_clk == -1) {
-      SPCRback = SPCR;
-      SPCR = mySPCR;
-    }
-    digitalWrite(_cs, LOW);
-    // set address
-    spixfer(0x7D);
-    spixfer(reg);
-    digitalWrite(_cs, HIGH);
-    digitalWrite(_cs, LOW);
-    spixfer(0x7E);
-    spixfer(value);
-    digitalWrite(_cs, HIGH);
-    if (_clk == -1) {
-      SPCR = SPCRback;
-    }
-  }
+  } 
+  // else {
+    // if (_clk == -1) {
+      // SPCRback = SPCR;
+      // SPCR = mySPCR;
+    // }
+    // digitalWrite(_cs, LOW);
+    //set address
+    // spixfer(0x7D);
+    // spixfer(reg);
+    // digitalWrite(_cs, HIGH);
+    // digitalWrite(_cs, LOW);
+    // spixfer(0x7E);
+    // spixfer(value);
+    // digitalWrite(_cs, HIGH);
+    // if (_clk == -1) {
+      // SPCR = SPCRback;
+    // }
+  // }
 }
