@@ -16,35 +16,35 @@
 
 #include "Adafruit_CAP1188.h"
 
-uint8_t mySPCR, SPCRback;
+// byte mySPCR, SPCRback;
 
-Adafruit_CAP1188::Adafruit_CAP1188(int8_t resetpin) {
+Adafruit_CAP1188::Adafruit_CAP1188(char resetpin) {
   // I2C
   _resetpin = resetpin;
   _i2c = true;
 }
 
-Adafruit_CAP1188::Adafruit_CAP1188(int8_t cspin, int8_t resetpin) {
-  // Hardware SPI
-  _cs = cspin;
-  _resetpin = resetpin;
-  _clk = -1;
-  _i2c = false;
-}
+// Adafruit_CAP1188::Adafruit_CAP1188(char cspin, char resetpin) {
+  //Hardware SPI
+  // _cs = cspin;
+  // _resetpin = resetpin;
+  // _clk = -1;
+  // _i2c = false;
+// }
 
-Adafruit_CAP1188::Adafruit_CAP1188(int8_t clkpin, int8_t misopin, 
-				   int8_t mosipin,int8_t cspin, 
-				   int8_t resetpin) {
-  // Software SPI
-  _cs = cspin;
-  _resetpin = resetpin;
-  _clk = clkpin;
-  _miso = misopin;
-  _mosi = mosipin;
-  _i2c = false;
-}
+// Adafruit_CAP1188::Adafruit_CAP1188(char clkpin, char misopin, 
+				   // char mosipin,char cspin, 
+				   // char resetpin) {
+  //Software SPI
+  // _cs = cspin;
+  // _resetpin = resetpin;
+  // _clk = clkpin;
+  // _miso = misopin;
+  // _mosi = mosipin;
+  // _i2c = false;
+// }
 
-boolean Adafruit_CAP1188::begin(uint8_t i2caddr) {
+boolean Adafruit_CAP1188::begin(byte i2caddr) {
   if (_i2c) {
     Wire.begin();
     
@@ -104,15 +104,15 @@ boolean Adafruit_CAP1188::begin(uint8_t i2caddr) {
   return true;
 }
 
-uint8_t  Adafruit_CAP1188::touched(void) {
-  uint8_t t = readRegister(CAP1188_SENINPUTSTATUS);
+byte  Adafruit_CAP1188::touched(void) {
+  byte t = readRegister(CAP1188_SENINPUTSTATUS);
   if (t) {
     writeRegister(CAP1188_MAIN, readRegister(CAP1188_MAIN) & ~CAP1188_MAIN_INT);
   }
   return t;
 }
 
-void Adafruit_CAP1188::LEDpolarity(uint8_t x) {
+void Adafruit_CAP1188::LEDpolarity(byte x) {
   writeRegister(CAP1188_LEDPOL, x);
 }
 
@@ -123,7 +123,7 @@ void Adafruit_CAP1188::LEDpolarity(uint8_t x) {
     @brief  Abstract away platform differences in Arduino wire library
 */
 /**************************************************************************/
-static uint8_t i2cread(void) {
+static byte i2cread(void) {
   // #if ARDUINO >= 100
   return Wire.read();
   // #else
@@ -136,9 +136,9 @@ static uint8_t i2cread(void) {
     @brief  Abstract away platform differences in Arduino wire library
 */
 /**************************************************************************/
-static void i2cwrite(uint8_t x) {
+static void i2cwrite(byte x) {
   // #if ARDUINO >= 100
-  Wire.write((uint8_t)x);
+  Wire.write((byte)x);
   // #else
   // Wire.send(x);
   // #endif
@@ -149,26 +149,26 @@ static void i2cwrite(uint8_t x) {
     @brief  Reads 8-bits from the specified register
 */
 /**************************************************************************/
-uint8_t Adafruit_CAP1188::spixfer(uint8_t data) {
-  if (_clk == -1) {
+// byte Adafruit_CAP1188::spixfer(byte data) {
+  // if (_clk == -1) {
    //Serial.println("Hardware SPI");
-    return SPI.transfer(data);
-  } else {
-   // Serial.println("Software SPI");
-    uint8_t reply = 0;
-    for (int i=7; i>=0; i--) {
-      reply <<= 1;
-      digitalWrite(_clk, LOW);
-      digitalWrite(_mosi, data & (1<<i));
-      digitalWrite(_clk, HIGH);
-      if (digitalRead(_miso)) 
-	reply |= 1;
-    }
-    return reply;
-  }
-}
+    // return SPI.transfer(data);
+  // } else {
+   //Serial.println("Software SPI");
+    // byte reply = 0;
+    // for (int i=7; i>=0; i--) {
+      // reply <<= 1;
+      // digitalWrite(_clk, LOW);
+      // digitalWrite(_mosi, data & (1<<i));
+      // digitalWrite(_clk, HIGH);
+      // if (digitalRead(_miso)) 
+	// reply |= 1;
+    // }
+    // return reply;
+  // }
+// }
 
-uint8_t Adafruit_CAP1188::readRegister(uint8_t reg) {
+byte Adafruit_CAP1188::readRegister(byte reg) {
   if (_i2c) {
     Wire.beginTransmission(_i2caddr);
     i2cwrite(reg);
@@ -188,7 +188,7 @@ uint8_t Adafruit_CAP1188::readRegister(uint8_t reg) {
     // digitalWrite(_cs, HIGH);
     // digitalWrite(_cs, LOW);
     // spixfer(0x7F);
-    // uint8_t reply = spixfer(0); 
+    // byte reply = spixfer(0); 
     // digitalWrite(_cs, HIGH);
     // if (_clk == -1) {
       // SPCR = SPCRback;
@@ -196,7 +196,7 @@ uint8_t Adafruit_CAP1188::readRegister(uint8_t reg) {
     // return reply;
   // }  
   else {
-	return 0;
+	  return 0;
   }
 }
 
@@ -206,11 +206,11 @@ uint8_t Adafruit_CAP1188::readRegister(uint8_t reg) {
     @brief  Writes 8-bits to the specified destination register
 */
 /**************************************************************************/
-void Adafruit_CAP1188::writeRegister(uint8_t reg, uint8_t value) {
+void Adafruit_CAP1188::writeRegister(byte reg, byte value) {
   if (_i2c) {
     Wire.beginTransmission(_i2caddr);
-    i2cwrite((uint8_t)reg);
-    i2cwrite((uint8_t)(value));
+    i2cwrite((byte)reg);
+    i2cwrite((byte)(value));
     Wire.endTransmission();
   } 
   // else {
