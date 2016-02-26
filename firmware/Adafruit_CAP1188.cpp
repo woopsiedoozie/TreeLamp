@@ -68,7 +68,7 @@ boolean Adafruit_CAP1188::begin(byte i2caddr) {
     // digitalWrite(_clk, HIGH);
   // }
 
-  if (_resetpin != -1) {
+  if (char _resetpin != -1) {
     pinMode(_resetpin, OUTPUT);
     digitalWrite(_resetpin, LOW);
     delay(100);
