@@ -17,11 +17,14 @@
 #include "Adafruit_CAP1188.h"
 
 // byte mySPCR, SPCRback;
+byte _i2caddr;
+char _resetpin;
+bool _i2c;
 
 Adafruit_CAP1188::Adafruit_CAP1188(char resetpin) {
   // I2C
-  char _resetpin = resetpin;
-  bool _i2c = true;
+  _resetpin = resetpin;
+  _i2c = true;
 }
 
 // Adafruit_CAP1188::Adafruit_CAP1188(char cspin, char resetpin) {
@@ -48,7 +51,7 @@ boolean Adafruit_CAP1188::begin(byte i2caddr) {
   if (_i2c) {
     Wire.begin();
     
-    byte _i2caddr = i2caddr;
+    _i2caddr = i2caddr;
   } 
   // else if (_clk == -1) {
     //Hardware SPI
@@ -68,7 +71,7 @@ boolean Adafruit_CAP1188::begin(byte i2caddr) {
     // digitalWrite(_clk, HIGH);
   // }
 
-  if (char _resetpin != -1) {
+  if (_resetpin != -1) {
     pinMode(_resetpin, OUTPUT);
     digitalWrite(_resetpin, LOW);
     delay(100);
