@@ -14,7 +14,7 @@
   BSD license, all text above must be included in any redistribution
  ****************************************************/
 
-#include "Adafruit_CAP1188.h"
+// #include "Adafruit_CAP1188.h"
 
 // byte mySPCR, SPCRback;
 byte _i2caddr;
