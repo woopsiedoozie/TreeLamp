@@ -231,7 +231,4 @@ void Adafruit_CAP1188::writeRegister(uint8_t reg, uint8_t value) {
       // SPCR = SPCRback;
     // }
   // }
-  else {
-	return 0;
-  }
 }
