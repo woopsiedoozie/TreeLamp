@@ -14,6 +14,13 @@
   BSD license, all text above must be included in any redistribution
  ****************************************************/
 
+// #if (ARDUINO >= 100)
+ // #include "Arduino.h"
+// #else
+ // #include "WProgram.h"
+// #endif
+// #include <Wire.h>
+// #include <SPI.h>
 #include "application.h"
 
 // The default I2C address
@@ -34,24 +41,24 @@
 
 class Adafruit_CAP1188 {
  public:
-  // Software SPI
-  Adafruit_CAP1188(int8_t clkpin, int8_t misopin, 
-		   int8_t mosipin,int8_t cspin, 
-		   int8_t resetpin);
-  // Hardware SPI
-  Adafruit_CAP1188(int8_t cspin, int8_t resetpin);
+  //Software SPI
+  // Adafruit_CAP1188(char clkpin, char misopin, 
+		   // char mosipin,char cspin, 
+		   // char resetpin);
+  //Hardware SPI
+  // Adafruit_CAP1188(char cspin, char resetpin);
   // Hardware I2C
-  Adafruit_CAP1188(int8_t resetpin = -1);
+  Adafruit_CAP1188(char resetpin = -1);
 
-  boolean begin(uint8_t i2caddr = CAP1188_I2CADDR);
-  uint8_t readRegister(uint8_t reg);
-  void writeRegister(uint8_t reg, uint8_t value);
-  uint8_t touched(void);
-  void LEDpolarity(uint8_t x);
+  boolean begin(byte i2caddr = CAP1188_I2CADDR);
+  byte readRegister(byte reg);
+  void writeRegister(byte reg, byte value);
+  byte touched(void);
+  void LEDpolarity(byte x);
 
  private:
-  uint8_t spixfer(uint8_t x);
+  // byte spixfer(byte x);
   boolean _i2c;
-  int8_t _i2caddr, _resetpin, _cs, _clk, _mosi, _miso;
+  char _i2caddr;
+  // char _i2caddr, _resetpin, _cs, _clk, _mosi, _miso;
 };
-
