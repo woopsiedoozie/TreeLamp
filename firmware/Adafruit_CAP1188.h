@@ -1,20 +1,20 @@
-/***************************************************
+/*************************************************** 
   This is a library for the CAP1188 8-Channel Capacitive Sensor
+
   Designed specifically to work with the CAP1188 breakout from Adafruit
   ----> https://www.adafruit.com/products/1602
-  These sensors use I2C/SPI to communicate, 2+ pins are required to
+
+  These sensors use I2C/SPI to communicate, 2+ pins are required to  
   interface
-  Adafruit invests time and resources providing this open source code,
-  please support Adafruit and open-source hardware by purchasing
+  Adafruit invests time and resources providing this open source code, 
+  please support Adafruit and open-source hardware by purchasing 
   products from Adafruit!
-  Written by Limor Fried/Ladyada for Adafruit Industries.
+
+  Written by Limor Fried/Ladyada for Adafruit Industries.  
   BSD license, all text above must be included in any redistribution
  ****************************************************/
 
-//We make sure we load the right header for the Photon
-//#ifdef SPARK
 #include "application.h"
-//#endif
 
 // The default I2C address
 #define CAP1188_I2CADDR 0x29
@@ -31,15 +31,12 @@
 #define CAP1188_MAIN_INT 0x01
 #define CAP1188_LEDPOL 0x73
 
-//newly added
-#define CAP1188_ANALOGID 0x10// returns analog values
-#define CAP1188_SENSITIVITY 0x42// controls sensitivity
 
 class Adafruit_CAP1188 {
  public:
   // Software SPI
-  Adafruit_CAP1188(int8_t clkpin, int8_t misopin,
-		   int8_t mosipin,int8_t cspin,
+  Adafruit_CAP1188(int8_t clkpin, int8_t misopin, 
+		   int8_t mosipin,int8_t cspin, 
 		   int8_t resetpin);
   // Hardware SPI
   Adafruit_CAP1188(int8_t cspin, int8_t resetpin);
@@ -50,13 +47,11 @@ class Adafruit_CAP1188 {
   uint8_t readRegister(uint8_t reg);
   void writeRegister(uint8_t reg, uint8_t value);
   uint8_t touched(void);
-  uint8_t touchedAnalog(byte offset);
   void LEDpolarity(uint8_t x);
-  void setSensitivity(int sensitivity);
 
  private:
   uint8_t spixfer(uint8_t x);
   boolean _i2c;
   int8_t _i2caddr, _resetpin, _cs, _clk, _mosi, _miso;
-
 };
+
